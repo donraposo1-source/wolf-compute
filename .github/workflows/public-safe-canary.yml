@@ -1,0 +1,27 @@
+name: Public Safe Canary
+on:
+  workflow_dispatch:
+    inputs:
+      mission_id:
+        description: Public-safe mission identifier
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Public-safe canary
+        env:
+          MISSION_ID: ${{ inputs.mission_id }}
+        run: |
+          set -eu
+          python3 - <<'PY'
+          import hashlib,json,os
+          x={'mission_id':os.environ['MISSION_ID'],'status':'PASS','surface':'PUBLIC_STANDARD_RUNNER'}
+          raw=json.dumps(x,sort_keys=True,separators=(',',':'))
+          print('RESULT='+raw)
+          print('RESULT_SHA256='+hashlib.sha256(raw.encode()).hexdigest())
+          PY
