@@ -2,10 +2,12 @@ name: Public Safe Canary
 on:
   workflow_dispatch:
     inputs:
-      mission_id:
-        description: Public-safe mission identifier
-        required: true
-        type: string
+      mission_id: {required: true, type: string}
+      fence: {required: true, type: string}
+      source_repo: {required: true, type: string}
+      source_sha: {required: true, type: string}
+      workflow_sha: {required: true, type: string}
+      binding_sha: {required: true, type: string}
 permissions:
   contents: read
 jobs:
@@ -13,15 +15,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Public-safe canary
+      - name: Content-addressed public-safe canary
         env:
           MISSION_ID: ${{ inputs.mission_id }}
+          FENCE: ${{ inputs.fence }}
+          SOURCE_REPO: ${{ inputs.source_repo }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          WORKFLOW_SHA: ${{ inputs.workflow_sha }}
+          BINDING_SHA: ${{ inputs.binding_sha }}
         run: |
           set -eu
           python3 - <<'PY'
           import hashlib,json,os
-          x={'mission_id':os.environ['MISSION_ID'],'status':'PASS','surface':'PUBLIC_STANDARD_RUNNER'}
-          raw=json.dumps(x,sort_keys=True,separators=(',',':'))
-          print('RESULT='+raw)
-          print('RESULT_SHA256='+hashlib.sha256(raw.encode()).hexdigest())
+          p={'status':'PASS','surface':'PUBLIC_STANDARD_RUNNER'}
+          raw=json.dumps(p,sort_keys=True,separators=(',',':'))
+          out={k.lower():os.environ[k] for k in ('MISSION_ID','SOURCE_REPO','SOURCE_SHA','WORKFLOW_SHA','BINDING_SHA')}
+          out['fence']=int(os.environ['FENCE']); out['payload']=p; out['result_sha']=hashlib.sha256(raw.encode()).hexdigest()
+          print('WOLF_RESULT='+json.dumps(out,sort_keys=True,separators=(',',':')))
           PY
