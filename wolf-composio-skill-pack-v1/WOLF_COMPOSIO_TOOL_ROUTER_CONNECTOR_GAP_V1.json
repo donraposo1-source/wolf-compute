@@ -1,0 +1,65 @@
+{
+  "identity": "WOLF_COMPOSIO_TOOL_ROUTER_CONNECTOR_GAP_V1",
+  "status": "BLOCKED_BY_CURRENT_CHATGPT_COMPOSIO_CONNECTOR",
+  "product": "Composio",
+  "connector": "ChatGPT↔Composio",
+  "missing_primitive": "authenticated Tool Router session create/use/attach with experimental.custom_tools/custom_toolkits through the existing connector identity",
+  "current_connector_capabilities": {
+    "chatgpt_composio_auth": "PRESENT",
+    "toolrouter_session_context": "PRESENT",
+    "workbench_context": "PRESENT",
+    "raw_composio_api_key_exposed": false,
+    "first_party_tool_router_attach_meta_action": false
+  },
+  "required_capability": {
+    "session_retrieve": true,
+    "session_create": true,
+    "session_attach": true,
+    "session_search_discover": true,
+    "session_execute": true,
+    "custom_tool_injection": true,
+    "raw_user_api_key_required": false
+  },
+  "security_contract": {
+    "expose_api_keys": false,
+    "expose_oauth_tokens": false,
+    "expose_bearer_credentials": false,
+    "expose_cookies": false,
+    "expose_workbench_credentials": false,
+    "arbitrary_http_proxy_required": false
+  },
+  "economic_contract": {
+    "eur_spend": 0,
+    "payment_method_required": false,
+    "trial_dependency": false,
+    "premium_tool_dependency": false
+  },
+  "acceptance_contract": {
+    "fresh_session_a": "inject WOLF; discover WOLF_PR_READINESS; retrieve schema; synthetic invocation PASS",
+    "fresh_session_b": "independent registry/process; inject WOLF; discover all five skills; canary PASS",
+    "cross_session": "PASS only if A and B independently pass",
+    "cross_conversation": "PASS only if a new ChatGPT conversation automatically obtains WOLF with no Founder prompt, API key, reauth, reinstall, original runtime, or installer memory"
+  },
+  "upstream_item": {
+    "exact_match": null,
+    "partial_match": "ComposioHQ/composio#3950",
+    "partial_match_reason": "mentions ChatGPT MCP session persistence, but not authenticated Tool Router custom-tool create/use/attach through the connector",
+    "sdk_product_support": ["ComposioHQ/composio#3350", "ComposioHQ/composio#3349"],
+    "submission_status": "BLOCKED_BY_EXISTING_AUTHORITY",
+    "submission_reason": "connected GitHub account has pull-only and no push/triage authority on ComposioHQ/composio"
+  },
+  "upstream_status": "SPEC_READY_NOT_SUBMITTED",
+  "last_verified_at": "2026-10-06T11:25:09Z",
+  "recheck_trigger": [
+    "new Composio connector release",
+    "new first-party Tool Router meta-action",
+    "upstream issue/status change relevant to ChatGPT connector session persistence or custom-tool injection",
+    "official Composio documentation announcing connector-side custom-tool injection"
+  ],
+  "scope": {
+    "wolf_skill_pack": "QUALIFIED_BUT_NOT_GLOBAL",
+    "composio_capability_plane": "OPERATIONAL_FOR_EXISTING_NATIVE_CAPABILITIES",
+    "factory_a": "UNCHANGED",
+    "global_wolf_custom_tool_autoload": "BLOCKED_ONLY"
+  }
+}
