@@ -1,0 +1,17 @@
+{
+  "pack":"WOLF_COMPOSIO_SKILL_PACK_V1",
+  "implementation_status":"LOCAL_IMPLEMENTATION_PASS",
+  "qualified_skills":5,
+  "tests":{"total":21,"passed":21,"failed":0},
+  "false_pass_count":0,
+  "hidden_writes":0,
+  "authority_bypass":"FAIL_CLOSED",
+  "paid_dependencies":0,
+  "new_external_accounts":0,
+  "new_infrastructure":0,
+  "meta_tool_discoverability":"NOT_PROVEN",
+  "cross_session_persistence":"NOT_PROVEN",
+  "registration_blocker":"COMPOSIO_API_KEY_NOT_EXPOSED_TO_REMOTE_RUNTIME",
+  "custom_mcp":"DENIED",
+  "proxy_execute_hot_path":"NO"
+}

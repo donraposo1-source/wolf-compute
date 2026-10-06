@@ -1,0 +1,13 @@
+{
+  "artifact_sha256":"4c9e15a9289ff6f0a1d59b4c4e85af9decb351826225bcadb30fcd3b84fad134",
+  "qualification_sha256":"3465e56d923f9f3693c1bf2aef44a62ca82e0addab8d7636160417191ff1f16d",
+  "identity":"WOLF_COMPOSIO_SKILL_PACK_V1",
+  "version":"1.0.0",
+  "toolkit":"WOLF",
+  "skills":["WOLF_CI_FAILURE_TRIAGE","WOLF_DEPENDENCY_RISK_AUDIT","WOLF_PR_READINESS","WOLF_EVIDENCE_PACK","WOLF_DURABLE_CHECKPOINT_PACKAGER"],
+  "tests":{"passed":21,"failed":0},
+  "economic_policy":{"eur_spend":0,"paid_fallback":"DENY","trial_credit_dependency":"DENY","cost_unknown":"DENY","premium_tool_dependency":"DENY"},
+  "authority_policy":{"merge_authority":"NONE","deployment_authority":"NONE","next_ready_authority":"NONE","checkpoint_promotion_authority":"NONE"},
+  "autoload_policy":{"native_composio_required":true,"custom_mcp":"DENY","new_infrastructure":"DENY","manual_reinstall":"DENY","founder_reauth":"DENY"},
+  "current_truth":{"local_implementation":"PASS","schema_validation":"PASS","negative_controls":"PASS","durable_registration":"NOT_PROVEN","cross_session":"NOT_PROVEN","cross_conversation":"NOT_PROVEN"}
+}
