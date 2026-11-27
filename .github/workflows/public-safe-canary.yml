@@ -12,10 +12,17 @@ permissions:
   contents: read
 jobs:
   canary:
+    if: github.repository == 'donraposo1-source/wolf-compute' && github.event.repository.private == false
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Content-addressed public-safe canary
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify public canary contract
+        run: python3 -m unittest discover -s tests -v
+      - name: Content-addressed public runner diagnostic only
         env:
           MISSION_ID: ${{ inputs.mission_id }}
           FENCE: ${{ inputs.fence }}
@@ -23,13 +30,12 @@ jobs:
           SOURCE_SHA: ${{ inputs.source_sha }}
           WORKFLOW_SHA: ${{ inputs.workflow_sha }}
           BINDING_SHA: ${{ inputs.binding_sha }}
+          EUR_SPEND: '0'
+          COST_UNKNOWN: DENY
+          PAID_FALLBACK: DENY
+          TRIAL_CREDIT: DENY
+          UNVERIFIED_BILLING: DENY
+          UNVERIFIED_PROVIDER: DENY
         run: |
           set -eu
-          python3 - <<'PY'
-          import hashlib,json,os
-          p={'status':'PASS','surface':'PUBLIC_STANDARD_RUNNER'}
-          raw=json.dumps(p,sort_keys=True,separators=(',',':'))
-          out={k.lower():os.environ[k] for k in ('MISSION_ID','SOURCE_REPO','SOURCE_SHA','WORKFLOW_SHA','BINDING_SHA')}
-          out['fence']=int(os.environ['FENCE']); out['payload']=p; out['result_sha']=hashlib.sha256(raw.encode()).hexdigest()
-          print('WOLF_RESULT='+json.dumps(out,sort_keys=True,separators=(',',':')))
-          PY
+          python3 scripts/public-safe-canary.py
